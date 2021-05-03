@@ -1,0 +1,79 @@
+{% extends "employ/base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="Username">Username</label>
+        <input type="text" name="Username" class='form-control'>
+      </div>
+
+      <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="password" name="Password" class='form-control'>
+      </div>
+
+      <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" name="Email" class='form-control'>
+      </div>
+
+      <div class="form-group">
+        <label for="Designation">Designation</label>
+        <input type="text" name="Designation" class='form-control'>
+      </div>
+
+      <div class="form-group">
+        <label for="Gender">Gender</label>
+        <select name="Gender" class='form-control'>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+          <option value="O">Others</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="Address">Address</label><br>
+        <textarea name="Address" rows="8" cols="80"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="Usertype">Usertype</label>
+        <select name="Usertype" class='form-control'>
+          <option value="EMP">Employee</option>
+          {% if user.employee.usertype == "SUP" %}
+          <option value="MAN">Manager</option>
+          <option value="SUP">Superuser</option>
+          {% endif %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="SalaryID">Salary</label>
+        <select name="SalaryID" class='form-control'>
+          {% for sal in sallist %}
+          <option value="{{sal.salaryID}}">{{sal.salaryAmount}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="DepartmentID">Department</label>
+        <select name="DepartmentID" class='form-control'>
+          {% for dep in deplist %}
+          <option value="{{dep.departmentID}}">{{dep.departmentName}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="Profilepic">Profile Pic</label>
+        <input type="file" name="Profilepic" accept="image/*">
+      </div>
+
+      <input type="submit"  value="Submit">
+      <br><br>
+      <a href="{% url 'profile' %}"><div class="btn btn-default">Back to Profile</div></a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
